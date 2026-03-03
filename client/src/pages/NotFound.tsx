@@ -1,5 +1,5 @@
-import { Button } from "./components/ui/button";
-import { Card, CardContent } from "./components/ui/card";
+import { Button } from "../components/ui/button"; // Adicionado ../ para subir um nível
+import { Card, CardContent } from "../components/ui/card"; // Adicionado ../ para subir um nível
 import { AlertCircle, Home } from "lucide-react";
 import { useLocation } from "wouter";
 
