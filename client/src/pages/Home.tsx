@@ -110,7 +110,7 @@ export default function Home() {
       tags: ['GLPI', 'Linux (Ubuntu/Debian)', 'Apache ', 'MySQL / MariaDB', 'SSH', 'Backup via terminal'],
     },
     {
-      id: 2,
+      id: 2,git@github.com:brazaraujoneto/portifolio-braznetotech.git
       title: 'Portifolio de Projetos Pessoais',
       description: 'API escalável de e-commerce com processamento de pagamentos e controle de estoque real-time.',
       category: 'dev',
