@@ -5,6 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
+import { Button } from "@/components/ui/Button";
 
 // No ambiente ESM da Vercel, usamos fileURLToPath para garantir o diretório raiz correto
 const __filename = fileURLToPath(import.meta.url);
