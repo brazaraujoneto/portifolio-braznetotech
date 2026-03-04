@@ -195,7 +195,7 @@ export default function Home() {
                 <img
                   alt="Braz Neto"
                   className="w-full h-full object-cover rounded-xl shadow-2xl"
-                  src="./public/img/braz.jpeg"
+                  src="./public/img/braz.png"
                 />
               </div>
             </div>
