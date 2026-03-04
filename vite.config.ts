@@ -5,7 +5,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
-import { Button } from "@/components/ui/Button";
 
 // No ambiente ESM da Vercel, usamos fileURLToPath para garantir o diretório raiz correto
 const __filename = fileURLToPath(import.meta.url);
@@ -36,14 +35,18 @@ function trimLogFile(logPath: string, maxSize: number) {
       keptBytes += lineBytes;
     }
     fs.writeFileSync(logPath, keptLines.join("\n"), "utf-8");
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
 }
 
 function writeToLogFile(source: LogSource, entries: unknown[]) {
   if (entries.length === 0) return;
   ensureLogDir();
   const logPath = path.join(LOG_DIR, `${source}.log`);
-  const lines = entries.map((entry) => `[${new Date().toISOString()}] ${JSON.stringify(entry)}`);
+  const lines = entries.map(
+    entry => `[${new Date().toISOString()}] ${JSON.stringify(entry)}`
+  );
   fs.appendFileSync(logPath, `${lines.join("\n")}\n`, "utf-8");
   trimLogFile(logPath, MAX_LOG_SIZE_BYTES);
 }
@@ -55,20 +58,29 @@ function vitePluginManusDebugCollector(): Plugin {
       if (process.env.NODE_ENV === "production") return html;
       return {
         html,
-        tags: [{ tag: "script", attrs: { src: "/__manus__/debug-collector.js", defer: true }, injectTo: "head" }],
+        tags: [
+          {
+            tag: "script",
+            attrs: { src: "/__manus__/debug-collector.js", defer: true },
+            injectTo: "head",
+          },
+        ],
       };
     },
     configureServer(server: ViteDevServer) {
       server.middlewares.use("/__manus__/logs", (req, res, next) => {
         if (req.method !== "POST") return next();
         let body = "";
-        req.on("data", (chunk) => body += chunk.toString());
+        req.on("data", chunk => (body += chunk.toString()));
         req.on("end", () => {
           try {
             const payload = JSON.parse(body);
-            if (payload.consoleLogs) writeToLogFile("browserConsole", payload.consoleLogs);
-            if (payload.networkRequests) writeToLogFile("networkRequests", payload.networkRequests);
-            if (payload.sessionEvents) writeToLogFile("sessionReplay", payload.sessionEvents);
+            if (payload.consoleLogs)
+              writeToLogFile("browserConsole", payload.consoleLogs);
+            if (payload.networkRequests)
+              writeToLogFile("networkRequests", payload.networkRequests);
+            if (payload.sessionEvents)
+              writeToLogFile("sessionReplay", payload.sessionEvents);
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ success: true }));
           } catch (e) {
@@ -82,7 +94,12 @@ function vitePluginManusDebugCollector(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), vitePluginManusRuntime(), vitePluginManusDebugCollector()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    vitePluginManusRuntime(),
+    vitePluginManusDebugCollector(),
+  ],
   resolve: {
     alias: {
       // Usando __dirname para garantir que o Vite ache a pasta src a partir da raiz
@@ -108,9 +125,4 @@ export default defineConfig({
     port: 3000,
     host: true,
   },
-  // Define rewrites para o Vercel
-  rewrites: [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ],
-  outputDirectory: "dist"
 });
