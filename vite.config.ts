@@ -97,9 +97,20 @@ export default defineConfig({
     // Define a saída para 'dist' na raiz do projeto (importante para a Vercel)
     outDir: path.resolve(PROJECT_ROOT, "dist"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        assetFileNames: "assets/[name]-[hash][extname]", // organiza os assets
+        entryFileNames: "[name]-[hash].js",
+      },
+    },
   },
   server: {
     port: 3000,
     host: true,
   },
+  // Define rewrites para o Vercel
+  rewrites: [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  outputDirectory: "dist"
 });
