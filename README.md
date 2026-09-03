@@ -44,4 +44,4 @@ Se quiser rodar o código do portfólio na sua própria máquina, siga os passos
 
 1. Clone o repositório:
 ```bash
-git clone [https://github.com/brazaraujoneto/NOME_DO_SEU_REPOSITORIO.git](https://github.com/brazaraujoneto/NOME_DO_SEU_REPOSITORIO.git)
+[git clone [https://github.com/brazaraujoneto/NOME_DO_SEU_REPOSITORIO.git](https://github.com/brazaraujoneto/NOME_DO_SEU_REPOSITORIO.git)](https://github.com/brazaraujoneto/portifolio-braznetotech.git)
